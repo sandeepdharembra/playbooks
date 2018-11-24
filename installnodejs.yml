@@ -1,0 +1,24 @@
+---
+- hosts: servernames
+  #remote_user: nextag
+  #become: yes
+  #become_method: sudo
+
+  tasks:
+
+  - name: Created new build directory
+    file: path=/home/nextag/deploy/ps-node/ps-node.{{ build_no }} state=directory
+  - name: Downloading the build tat
+    get_url: url=http://172.16.12.15/repo/components/ps-node/builds/ps-node.{{ build_no }}.tar.gz dest=/tmp
+  - name: Untar the build
+    unarchive: src=/tmp/ps-node.{{ build_no }}.tar.gz dest=/home/nextag/deploy/ps-node/ps-node.{{ build_no }} remote_src=yes
+  - name: Webstopping
+    command: webstop
+  - name: creating softllink
+    command: rm -rf /home/nextag/live
+  - name: creating new live link
+    command: ln -s /home/nextag/deploy/ps-node/ps-node.{{ build_no }} live
+  - name: Webstarting
+    command: webstart
+    register: command_result
+    failed_when: "'Error' in command_result.stderr"
