@@ -1,9 +1,6 @@
 ---
 - hosts: all
   remote_user: nextag
-  become_user: nextag
-  #become: yes
-  #become_method: sudo
 
   tasks:
 
