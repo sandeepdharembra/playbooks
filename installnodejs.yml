@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  #remote_user: nextag
+  remote_user: nextag
   #become: yes
   #become_method: sudo
 
