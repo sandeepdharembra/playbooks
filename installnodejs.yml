@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  become: yes
+  become_user: nextag
   remote_user: nextag
 
   tasks:
