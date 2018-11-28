@@ -3,6 +3,7 @@
   # become: yes
   # become_user: nextag
   # remote_user: nextag
+  gather_facts: no
 
   tasks:
 
