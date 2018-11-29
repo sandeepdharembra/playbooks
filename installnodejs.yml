@@ -1,24 +1,24 @@
 ---
 - hosts: all
   # become: yes
-  # become_user: nextag
-  # remote_user: nextag
+  # become_user: xxxxx
+  # remote_user: xxxxx
   gather_facts: no
 
   tasks:
 
   - name: Created new build directory
-    file: path=/home/nextag/deploy/ps-node/ps-node.{{ build_no }} state=directory
+    file: path=<path>/ps-node.{{ build_no }} state=directory
   - name: Downloading the build tat
-    get_url: url=http://172.16.12.15/repo/components/ps-node/builds/ps-node.{{ build_no }}.tar.gz dest=/tmp
+    get_url: url=<path>/ps-node.{{ build_no }}.tar.gz dest=/tmp
   - name: Untar the build
-    unarchive: src=/tmp/ps-node.{{ build_no }}.tar.gz dest=/home/nextag/deploy/ps-node/ps-node.{{ build_no }} remote_src=yes
+    unarchive: src=/tmp/ps-node.{{ build_no }}.tar.gz dest=<path>/ps-node.{{ build_no }} remote_src=yes
   - name: Webstopping
     command: webstop
   - name: creating softllink
-    command: rm -rf /home/nextag/live
+    command: rm -rf <path>
   - name: creating new live link
-    command: ln -s /home/nextag/deploy/ps-node/ps-node.{{ build_no }} live
+    command: ln -s <path>/ps-node.{{ build_no }} live
   - name: Webstarting
     command: webstart
     register: command_result
