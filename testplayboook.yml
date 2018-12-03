@@ -1,0 +1,8 @@
+---
+- hosts: "{{ servers }}"
+  remote_user: nextag
+
+  tasks:
+
+  - name: Pinging the hosts
+    ping:
