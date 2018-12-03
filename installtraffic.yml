@@ -1,0 +1,32 @@
+---
+- hosts: "{{ server }}"
+  remote_user: nextag
+
+  tasks:
+
+  - name: Created new build directory
+    file: path=/home/nextag/deploy/main/main.build.traffic-master.{{ build_no }} state=directory
+  - name: Created new properties build directory
+    file: path=/home/nextag/deploy/properties/properties.build.traffic-master.{{ build_no }} state=directory
+  - name: Downloading the build zip
+    get_url: url=http://172.16.12.15/repo/components/main/builds/main.build.traffic-master.{{ build_no }}.zip dest=/tmp
+  - name: Downloading the Properties build
+    get_url: url=http://172.16.12.15/repo/components/properties/builds/properties.build.traffic-master.{{ build_no }}.zip dest=/tmp
+  - name: Unzip the build
+    unarchive: src=/tmp/main.build.traffic-master.{{ build_no }}.zip dest=/home/nextag/deploy/main remote_src=yes
+  - name: Unzip the properties build
+    unarchive: src=/tmp/properties.build.traffic-master.{{ build_no }}.zip dest=/home/nextag/deploy/properties remote_src=yes    
+  - name: Webstopping
+    command: webstop
+  - name: Removing Existing build and properties softllink
+    command: rm -rf /home/nextag/live /home/nextag/properties
+  - name: creating new live link
+    command: ln -s /home/nextag/deploy/main/main.build.traffic-master.{{ build_no }} live
+  - name: creating new properties link
+    command: ln -s /home/nextag/deploy/properties/properties.build.traffic-master.{{ build_no }} properties
+  - name: creating instance properties link
+    command: ln -sfn /home/nextag/properties.static/instance.properties /home/nextag/properties/instance.properties
+  - name: Webstarting
+    command: webstart
+    register: command_result
+    failed_when: "'Error' in command_result.stderr"
