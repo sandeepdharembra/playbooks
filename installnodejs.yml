@@ -4,18 +4,26 @@
   
   tasks:
 
-  - name: Created new build directory
+  - name: Checking if build is already present
+    stat:
+      path: /home/nextag/deploy/ps-node/ps-node.{{ build_no }}
+      register: build_directory
+  - name: Creating new build directory
     file: path=/home/nextag/deploy/ps-node/ps-node.{{ build_no }} state=directory
-  - name: Downloading the build tat
+  - name: Downloading the build tar
     get_url: url=http://172.16.12.15/repo/components/ps-node/builds/ps-node.{{ build_no }}.tar.gz dest=/tmp
+    when: build_directory.stat.exists == False
   - name: Untar the build
-    unarchive: src=/tmp/ps-node.{{ build_no }}.tar.gz dest=/home/nextag/deploy/ps-node/ps-node.{{ build_no }} remote_src=yes creates
+    unarchive: src=/tmp/ps-node.{{ build_no }}.tar.gz dest=/home/nextag/deploy/ps-node/ps-node.{{ build_no }} remote_src=yes
+    when: build_directory.stat.exists == False
   - name: Webstopping
     command: webstop
-  - name: creating softllink
+  - name: Removing Existing softllink
     command: rm -rf /home/nextag/live
+    when: build_directory.stat.exists == False
   - name: creating new live link
     command: ln -s /home/nextag/deploy/ps-node/ps-node.{{ build_no }} live
+    when: build_directory.stat.exists == False
   - name: Webstarting
     command: webstart
     register: command_result
