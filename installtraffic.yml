@@ -13,7 +13,7 @@
   - name: Downloading the Properties build
     get_url: url=http://172.16.12.15/repo/components/properties/builds/properties.build.traffic-master.{{ build_no }}.zip dest=/tmp
   - name: Unzip the build
-    unarchive: src=/tmp/main.build.traffic-master.{{ build_no }}.zip dest=/home/nextag/deploy/main remote_src=yes
+    unarchive: src=/tmp/main.build.traffic-master.{{ build_no }}.zip dest=/home/nextag/deploy/main remote_src=yes creates
   - name: Unzip the properties build
     unarchive: src=/tmp/properties.build.traffic-master.{{ build_no }}.zip dest=/home/nextag/deploy/properties remote_src=yes    
   - name: Webstopping
