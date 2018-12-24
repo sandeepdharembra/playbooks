@@ -3,4 +3,18 @@ hosts: all
 remote_user: nextag
 
 tasks:
-    ping:
+    - name: pinging the hosts
+      ping:
+      tags:
+        - pinging
+    - name: checking free memory
+      command: free -m
+      tags:
+        - mem
+        - sys
+    - name: checking tmp disk space
+      command: du -sh /tmp
+      tags:
+        - disk
+        - sys
+    
