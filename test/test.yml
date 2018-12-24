@@ -1,8 +1,8 @@
 ---
-hosts: all
-remote_user: nextag
+- hosts: all
+  remote_user: nextag
 
-tasks:
+  tasks:
     - name: pinging the hosts
       ping:
       tags:
