@@ -5,7 +5,7 @@
   tasks:
     - name: pinging the hosts
       ping:
-      tags: ['pinging']
+      tags: pinging
     - name: checking free memory
       command: free -m
       tags: [ 'mem', 'sys' ]
