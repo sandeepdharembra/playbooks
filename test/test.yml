@@ -13,7 +13,7 @@
         - mem
         - sys
     - name: checking tmp disk space
-      command: du -sh /tmp
+      command: du -sh /home/nextag
       tags:
         - disk
         - sys
