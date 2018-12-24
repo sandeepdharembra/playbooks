@@ -8,7 +8,7 @@
       tags: [ 'pinging']
     - name: checking free memory
       command: free -m
-      tags: [ 'mem', ',sys' ]
+      tags: [ 'mem', 'sys' ]
     - name: checking tmp disk space
       command: du -sh /home/nextag
-      tags: [ 'disk', ',sys' ]
+      tags: [ 'disk', 'sys' ]
