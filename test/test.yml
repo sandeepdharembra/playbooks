@@ -19,4 +19,4 @@
        return_content: yes
        body_format: json
       register: build_details
-    - debug: var=build_details.json.buildNumber
+    - debug: var=build_details.json.actions.buildsByBranchName.buildNumber
