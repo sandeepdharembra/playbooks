@@ -14,7 +14,7 @@
       tags: [ 'disk', 'sys' ]
     - name: Extracting latest build
       uri:
-      `url: http://jenkins.aws.hsid.de:8080/job/traffic-master/lastSuccessfulBuild/api/json
+       url: http://jenkins.aws.hsid.de:8080/job/traffic-master/lastSuccessfulBuild/api/json
        method: GET
        return_content: yes
       register: build_details
