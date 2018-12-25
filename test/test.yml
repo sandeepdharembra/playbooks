@@ -17,5 +17,6 @@
        url: http://jenkins.aws.hsid.de:8080/job/traffic-master/lastSuccessfulBuild/api/json
        method: GET
        return_content: yes
+       body_format: json
       register: build_details
     - debug: var=build_details.json.buildNumber
